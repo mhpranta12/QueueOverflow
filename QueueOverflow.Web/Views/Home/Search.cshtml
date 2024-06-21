@@ -1,0 +1,37 @@
+﻿@model ViewQuestionsModel
+@{
+	ViewData["title"] = "Questions";
+}
+<h1>Found Questions</h1>
+<hr />
+@if (Model.QuestionsCount > 0)
+{
+	<div class="d-inline p-2 bg-success text-white">@Model.Questions.Count questions found </div>
+}
+else
+{
+	<div class="d-inline p-2 bg-danger text-white"> Sorry no questions were found</div>
+}
+<br />
+<br />
+<br />
+@foreach (var question in Model.Questions)
+{
+	<div class="card bg-light">
+		<div class="card-body">
+			<span>@question.Like Votes</span>
+			<h6> <a href="/user/Question/View/@question.Id" class="fw-bold text-blue">@question.Title </a> </h6>
+			<br />
+			<span> @question.Description</span>
+			<br />
+			<br />
+			<span>
+				@foreach (var tag in question.Tags)
+				{
+					<div class="d-inline p-2 bg-secondary text-white">@tag.Name</div>
+				}
+			</span>
+		</div>
+	</div>
+	<br />
+}

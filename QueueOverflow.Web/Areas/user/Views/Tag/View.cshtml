@@ -1,0 +1,42 @@
+﻿@model ViewAllQuestionModel
+@{
+	ViewData["title"] = "Questions";
+	if (!User.Identity.IsAuthenticated)
+	{
+		Layout = "_LayoutUnlogged";
+	}
+	else
+	{
+		Layout = "_LayoutWithSearch";
+	}
+}
+<h1>All Questions</h1>
+<span>@Model.QuestionsCount questions</span>
+<br />
+<br />
+<partial name="_ResponsePartial" />
+@foreach (var question in Model.Questions)
+{
+	<div class="card bg-light rounded shadow">
+		<div class="p-3 card-body">
+			<span class="p-2 mb-2 bg-success bg-gradient rounded text-white">@question.Like Votes</span> |
+			<span class="p-2 mb-2 bg-danger bg-gradient rounded text-white">@question.Dislike Down Votes</span>
+			<br />
+			<br />
+			<span class="p-2 mb-2 bg-primary bg-gradient rounded text-white">Posted on: @question.CreationTime.ToString()</span>
+			<br />
+			<br />
+			<h5 class="h-5"> <a href="/user/Question/View/@question.Id" class="fw-bold text-blue">@question.Title </a> </h5>
+			<br />
+			<span> @Html.Raw(question.Description)</span>
+			<br />
+			<span>
+				@foreach (var tag in question.Tags)
+				{
+					<a href="/user/Tag/View/@tag.Id" class="d-inline p-2 bg-secondary rounded text-white"> @tag.Name</a>
+				}
+			</span>
+		</div>
+	</div>
+	<br />
+}

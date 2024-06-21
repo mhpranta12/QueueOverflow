@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using QueueOverflow.Infrastructure.Membership
+@{
+    Layout = "_LayoutNav";
+}
+@inject UserManager<ApplicationUser> UserManager
+
+<h4 class="display-4">Profile Picture</h4>
+<h6 class="text-danger">@ViewBag.Message</h6>
+<h6 class="text-success">@ViewBag.SuccessMessage</h6>
+<img src="/user/ProfilePic/GetIamge/@UserManager.GetUserId(User)" style="height:200px;width:200px; border-radius:5px;">
+            <br />
+            <br />
+<form enctype="multipart/form-data" asp-area="user" asp-controller="ProfilePic" asp-action="UploadPic" method="post">
+    <label for="formFile" class="form-label">Profile Picture</label>
+    <input type="file" class="form-control" name="file" id="file" />
+    <br />
+    <br />
+    <br />
+    <input type="submit" class="btn tbn-lg btn-outline-primary rounded shadow" value="Upload" />
+</form>

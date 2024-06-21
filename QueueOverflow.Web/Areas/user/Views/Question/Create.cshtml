@@ -1,0 +1,86 @@
+﻿@model CreateQuestionModel
+@{
+    ViewData["Title"] = "Ask a public question";
+}
+<script src="https://cdn.tiny.cloud/1/1en51jkw8j1osd3n5gzwxjqrafsw9c6cng70ypdqadx01gs5/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Tiny MCE CDN For MD Editor -->
+<script>
+    tinymce.init({
+        selector: 'textarea',
+        plugins: ['table powerpaste',
+            'lists media',
+            'paste'],
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+        ],
+        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+    });
+</script>
+
+<h2 class="h-2"> Ask a public question</h2>
+<hr />
+<br />
+@if (TempData["SuccessMessage"] is not null)
+{
+    <div class="p-1 mb-2 bg-success bg-gradient shadow-md text-white rounded">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] is not null)
+{
+    <div class="p-1 mb-2 bg-danger bg-gradient shadow-md text-white rounded">@TempData["ErrorMessage"]</div>
+}
+@* <h5 class="bg-danger text-white rounded">@ViewBag.ErrorMessage</h5> *@
+<form class="form-horizontal" asp-area="user" asp-controller="Question" asp-action="Create" asp-antiforgery="true" method="post">
+    <div class="card">
+        <div asp-validation-summary="All" class="bg-white text-danger"></div>
+        <div class="card-body">
+            <input asp-for="UserId" type="hidden" />
+            <input asp-for="UserName" type="hidden" />
+            <h6> <label asp-for="Title" class="form-label"></label></h6>
+            <span>Be specific and imagine you’re asking a question to another person.</span>
+            <br />
+            <input type="text" asp-for="Title" class="form-control" id="floatingInput"/>
+            <br />
+            <span asp-validation-for="Title" class="text-danger"></span>
+            <br />
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-body">
+                <h6> <label asp-for="Description" class="form-label"></label></h6>
+                <span>What are the details of your problem?</span>
+                <br />
+                <span>Introduce the problem and expand on what you put in the title. Minimum 20 characters.</span>
+                <br />
+                <textarea asp-for="Description" class="form-control" rows="4" id="tiny"/>
+                </textarea>
+                <br />
+                <span asp-validation-for="Description" class="text-danger"></span>
+                <br />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <h6> <label asp-for="Tags" class="form-label"></label></h6>
+            <span>Attach your favourite tags separating through spaces, <b> (Maximum 5 Tags) </b></span>
+            <br />
+            <input type="text" asp-for="Tags" class="form-control" id="floatingInput" />
+            <br />
+            <span asp-validation-for="Tags" class="text-danger"></span>
+            <br />
+        </div>
+    </div>
+    <br />
+    
+    <input type="submit" class="btn btn-outline-primary btn-lg rounded shadow" value="Create" />
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,22 @@
+.comments
+{
+    background-color:antiquewhite;
+}
+.replies
+{
+    background-color:aliceblue;
+    border-radius: 5%;
+    padding: 5%;
+    margin:5%;
+    height:40%;
+    width: 80%;
+}
+.replies-text
+{
+    background-color:aliceblue;
+    border-radius: 5%;
+    padding: 5%;
+    margin:5%;
+    height:40%;
+    width: 70%;
+}

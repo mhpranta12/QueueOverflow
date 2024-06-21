@@ -1,0 +1,88 @@
+﻿@model ViewQuestionsModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QueueOverflow.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sidebar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/QueueOverflow.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        @* Header's NavBar *@
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/"> <img width="48" height="48" src="https://img.icons8.com/fluency/48/stackoverflow.png" alt="stackoverflow" /> QueueOver<b>flow</b></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <form class="d-flex" id="searchForm" asp-controller="Home" asp-action="Search" asp-antiforgery="true" method="post">
+                            <input asp-for="SearchTitle" class="form-control me-2" id="floatingInput" type="search" placeholder="Search Questions" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit" id="searchBtn">Search</button>
+                        </form>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+        @* Header's NavBar *@
+    </header>
+
+    <!-- Sidebar  And Main Content-->
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="/" class="article"><img width="25" height="25" src="https://img.icons8.com/ios-filled/25/home.png" alt="home" /> Home</a>
+                </li> 
+                <li>
+                    <a href="/user/Question/Questions" class="article"> <img width="25" height="25" src="https://img.icons8.com/fluency-systems-filled/25/questions.png" alt="questions" />Questions</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info">
+                            <i class="fas fa-align-left"></i> ☰
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+             </div>
+        </div>
+    </div>
+    <!-- Sidebar  And Main Content-->
+    
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - QueueOverflow
+        </div>
+    </footer>
+    @RenderSection("Scripts",false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/sidebar.js" asp-append-version="true"></script>
+</body>
+</html>

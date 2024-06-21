@@ -1,0 +1,35 @@
+﻿@model ViewAllQuestionModel
+@{
+	ViewData["title"] = "Questions";
+	if (!User.Identity.IsAuthenticated)
+	{
+		Layout = "_LayoutUnlogged";
+	}
+	else
+	{
+		Layout = "_LayoutWithSearch";
+	}
+}
+<h1>All Questions</h1>
+<span>@Model.QuestionsCount questions</span>
+<partial name="_ResponsePartial" />
+@foreach (var question in Model.Questions)
+{
+	<div class="card bg-light">
+		<div class="card-body">
+			<span>@question.Like Votes</span>
+			<h6> <a href="/user/Question/View/@question.Id" class="fw-bold text-blue">@question.Title </a> </h6>
+			<br />
+			<span> @question.Description</span>
+			<br />
+			<br />
+			<span>
+				@foreach (var tag in question.Tags)
+				{
+					<div class="d-inline p-2 bg-secondary text-white">@tag.Name</div>
+				}
+			</span>
+		</div>
+	</div>
+	<br />
+}

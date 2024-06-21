@@ -1,0 +1,48 @@
+﻿@model ViewAllQuestionModelAdmin
+@{
+	ViewData["title"] = "Questions";
+	if (!User.Identity.IsAuthenticated)
+	{
+		Layout = "_Layout";
+	}
+	else
+	{
+		Layout = "_LayoutNav";
+	}
+}
+<h1>All Questions</h1>
+<span>@Model.QuestionsCount questions</span>
+<h5 class="bg-danger text-white rounded">@ViewBag.ErrorMessage</h5>
+<h5 class="bg-success text-white rounded">@ViewBag.SuccessMessage</h5>
+<h5 class="bg-success text-white rounded">@TempData["SuccessMessage"]</h5>
+
+<h3 class="display-6">Questions</h3>
+<h6 class="display-6">Viewing Questions As Admin</h6>
+
+@if (Model.Questions is not null && Model.Questions.Count > 0)
+{
+	@foreach (var question in Model.Questions)
+	{
+		<div class="card bg-light bg-gradient rounded-md shadow p-3 mb-5">
+			<div class="card-body" id="questions">
+				<div class="container">
+					<div class="row">
+						<div class="col-9">
+							<h6>@question.Title</h6>
+						</div>
+						<div class="col-3">
+							<a href="/admin/Question/Delete/@question.Id" class="text-danger">
+								<span class="material-icons">
+									delete_outline
+								</span>
+							</a>
+						</div>
+					</div>
+					<hr />
+					<br />
+				</div>
+			</div>
+		</div>
+	}
+}
+</div>

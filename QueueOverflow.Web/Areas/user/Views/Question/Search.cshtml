@@ -1,0 +1,41 @@
+﻿@model ViewAllQuestionModel
+@{
+	ViewData["title"] = "Questions";
+	Layout = "_LayoutWithSearch";
+}
+<h1>Found Questions</h1>
+<hr />
+@if (Model.QuestionsCount > 0)
+{
+	<div class="d-inline p-2 bg-success bg-gradient text-white rounded shadow">@Model.Questions.Count questions found </div>
+}
+else
+{
+	<div class="d-inline p-2 bg-danger bg-gradient text-white rounded shadow"> Sorry no questions were found</div>
+}
+<br />
+<br />
+<br />
+<partial name="_ResponsePartial" />
+@foreach (var question in Model.Questions)
+{
+	<div class="p-4 card bg-light">
+		<div class="card-body">
+			<span class="p-2 mb-2 bg-info bg-gradient rounded text-white shadow">@question.Like Votes</span> |
+			<span class="p-2 mb-2 bg-danger bg-gradient rounded text-white shadow">@question.Dislike Down Votes</span>
+			<br />
+			<br />
+			<h4 class="h-4"> <a href="/user/Question/View/@question.Id" class="fw-bold text-blue">@question.Title </a> </h4>
+			<br />
+			<span> @Html.Raw(question.Description)</span>
+			<br />
+			<span>
+				@foreach (var tag in question.Tags)
+				{
+					<div class="d-inline p-2 bg-secondary bg-gradient text-white rounded shadow">@tag.Name</div>
+				}
+			</span>
+		</div>
+	</div>
+	<br />
+}

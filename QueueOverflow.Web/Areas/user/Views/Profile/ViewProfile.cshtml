@@ -1,0 +1,212 @@
+﻿@model ViewProfileModel
+@{
+	ViewData["Title"] = "Profile View";
+}
+<span> @ViewBag.Message</span>
+
+<img src="/user/ProfilePic/GetIamge/@Model.Id" style="height:200px;width:200px; border-radius:5px;">
+<h3>@Html.DisplayFor(Model => Model.Name)</h3>
+<h3 class="opacity-50">
+	@if (Model.Designation is null)
+	{
+		<h5> </h5>
+	}
+	else
+	{
+		<h5 class="opacity-75">@Html.DisplayFor(Model => Model.Designation)</h5>
+	}
+	<br />
+	<h6 class=" opacity-50"><img width="25" height="25" src="https://img.icons8.com/carbon-copy/25/birthday-cake--v1.png" alt="birthday-cake--v1" /> Member from @Html.DisplayFor(Model => Model.JoinedDate.Year)</h6>
+	<br />
+	<div class="container">
+		<div class="row">
+			<div class="col-8">
+				<b class=" opacity-50"><img width="25" height="25" src="https://img.icons8.com/ios/100/github--v1.png" alt="github--v1" /> <a href="@Model.GithubLink">  </a> </b>
+				<b class=" opacity-50"><img width="25" height="25" src="https://img.icons8.com/dotty/25/link.png" alt="link" /> @Html.DisplayFor(Model => Model.PortfolioLink) </b>
+				<b class=" opacity-50"><img width="25" height="25" src="https://img.icons8.com/ios-filled/25/marker.png" alt="link" /> @Html.DisplayFor(Model => Model.Address) </b>
+			</div>
+		</div>
+	</div>
+	<br />
+
+	@* Displaying Button *@
+	<button class="btn btn-primary rounded-pill" onclick="showProfileSection()">Profile</button>
+	<button class="btn btn-primary rounded-pill" onclick="showActivitySection()">Activity</button>
+
+	@* Profile Section  *@
+	<div id="profile" style="display:block">
+		<h1>Profile</h1>
+		<h2 class="display-6">Stats</h2>
+		<div class="card rounded-md shadow p-3 mb-5">
+			<div class="card-body">
+				<div class="container">
+					<div class="row">
+						<div class="col-4">
+							<h3>@Model.Reputations</h3>
+							<br />
+							Reputations
+						</div>
+						<div class="col-4">
+							<h3>@Model.AnswersGiven</h3>
+							<br>
+							Answers
+						</div>
+						<div class="col-4">
+							<h3>@Model.TotalQuestions</h3>
+							<br>
+							Questions
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br />
+		<h2 class="display-6">About</h2>
+		<div class="card rounded-md bg-light opacity-50 shadow p-3 mb-5">
+			<div class="card-body">
+				@if (Model.About is null)
+				{
+					<h6>@Model.Name 's About section is currently blank.</h6>
+				}
+				else
+				{
+					<h6>@Html.DisplayFor(Model => Model.About)</h6>
+				}
+			</div>
+		</div>
+		<h2 class="display-6">Badges</h2>
+		<div class="card rounded-md bg-light opacity-50 shadow p-3 mb-5">
+			<div class="card-body">
+				@if (Model.Badge == "n/a")
+				{
+
+					<h6> @Model.Name didn't earn any badges. Contribute to earn. </h6>
+				}
+				else if (Model.Badge == "Bronze")
+				{
+					<div class="container">
+						<div class="row">
+							<div class="col-4">
+							</div>
+							<div class="col-4">
+							</div>
+							<div class="col-4">
+								<div class="card rounded-md bg-light opacity-50 shadow p-3 mb-5">
+									<div class="card-body">
+										<img width="100" height="100" src="https://img.icons8.com/external-flatarticons-blue-flatarticons/100/external-rank-usa-flatarticons-blue-flatarticons.png" alt="external-rank-usa-flatarticons-blue-flatarticons" />
+										<br />
+										<b>Bronze Badge </b>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+				else if (Model.Badge == "Silver")
+				{
+					<div class="container">
+						<div class="row">
+							<div class="col-4">
+							</div>
+							<div class="col-4">
+								<div class="card rounded-md bg-light opacity-50 shadow p-3 mb-5">
+									<div class="card-body">
+										<img width="100" height="100" src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/100/external-rank-usa-flatart-icons-outline-flatarticons.png" alt="external-rank-usa-flatart-icons-outline-flatarticons" />
+										<br />
+										<b>Silver Badge </b>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="card rounded-md bg-light opacity-50 shadow p-3 mb-5">
+									<div class="card-body">
+										<img width="100" height="100" src="https://img.icons8.com/external-flatarticons-blue-flatarticons/100/external-rank-usa-flatarticons-blue-flatarticons.png" alt="external-rank-usa-flatarticons-blue-flatarticons" />
+										<br />
+										<b>Bronze Badge </b>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				}
+				else if (Model.Badge == "Gold")
+				{
+					<div class="container">
+						<div class="row">
+							<div class="col-4">
+								<div class="card rounded-md bg-light opacity-50 shadow p-3 mb-5">
+									<div class="card-body">
+										<img width="100" height="100" src="https://img.icons8.com/external-flatart-icons-flat-flatarticons/100/external-rank-usa-flatart-icons-flat-flatarticons.png" alt="external-rank-usa-flatart-icons-flat-flatarticons" />
+										<br />
+										<b>Gold Badge </b>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="card rounded-md bg-light opacity-50 shadow p-3 mb-5">
+									<div class="card-body">
+										<img width="100" height="100" src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/100/external-rank-usa-flatart-icons-outline-flatarticons.png" alt="external-rank-usa-flatart-icons-outline-flatarticons" />
+										<br />
+										<b>Silver Badge </b>
+									</div>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="card rounded-md bg-light opacity-50 shadow p-3 mb-5">
+									<div class="card-body">
+										<img width="100" height="100" src="https://img.icons8.com/external-flatarticons-blue-flatarticons/100/external-rank-usa-flatarticons-blue-flatarticons.png" alt="external-rank-usa-flatarticons-blue-flatarticons" />
+										<br />
+										<b>Bronze Badge </b>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+
+	</div>
+
+	@* Activity Section  *@
+	<div id="activity" style="display:none">
+		<h1>Activity</h1>
+		<h6 class=" opacity-50">Reputations @Html.DisplayFor(Model => Model.Reputations)</h6>
+		<br />
+		<h6 class=" opacity-50">Badge @Html.DisplayFor(Model => Model.Badge)</h6>
+		<h3 class="display-6">Questions</h3>
+
+		@if (Model.UsersQuestions is not null && Model.UsersQuestions.Count > 0)
+		{
+			@foreach (var question in Model.UsersQuestions)
+			{
+				<div class="card bg-light bg-gradient rounded-md shadow p-3 mb-5">
+					<div class="card-body">
+						<h6><a href="/user/Question/View/@question.Id">@question.Title</a></h6>
+						<br />
+					</div>
+				</div>
+			}
+		}
+		@section Scripts
+  {
+			<script>
+				function showProfileSection() {
+					var about = document.getElementById("profile");
+					var activity = document.getElementById("activity");
+					about.style.display = "block";
+					activity.style.display = "none";
+				}
+
+				function showActivitySection() {
+					var about = document.getElementById("profile");
+					var activity = document.getElementById("activity");
+					about.style.display = "none";
+					activity.style.display = "block";
+
+				}
+			</script>
+		}
+
+

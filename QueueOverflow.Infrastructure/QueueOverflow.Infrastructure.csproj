@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AWSSDK.SQS" Version="3.7.300.76" />
+		<PackageReference Include="MailKit" Version="4.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.14" />
+		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.7" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QueueOverflow.Application\QueueOverflow.Application.csproj" />
+    <ProjectReference Include="..\QueueOverflow.Domain\QueueOverflow.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

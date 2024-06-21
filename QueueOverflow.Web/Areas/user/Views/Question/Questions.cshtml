@@ -1,0 +1,53 @@
+﻿@model ViewAllQuestionModel
+@{
+	ViewData["title"] = "Questions";
+	if(!User.Identity.IsAuthenticated)
+	{
+		Layout = "_LayoutUnlogged";
+	}
+	else
+	{
+		Layout = "_LayoutWithSearch";
+	}
+}
+<h1 class="h-1">All Questions</h1>
+<span>@Model.QuestionsCount questions</span>
+<br />
+<br />
+@if (TempData["SuccessMessage"] is not null)
+{
+	<div class="p-1 mb-2 bg-success bg-gradient shadow-md text-white rounded">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] is not null)
+{
+	<div class="p-1 mb-2 bg-danger bg-gradient shadow-md text-white rounded">@TempData["ErrorMessage"]</div>
+}
+<partial name="_ResponsePartial" />
+@foreach(var question in Model.Questions)
+{
+	<div class="card bg-light rounded shadow">
+		<div class="p-4 card-body">
+			<span class="p-2 mb-2 bg-info bg-gradient rounded text-white shadow">@question.Like Votes</span>
+			<br />
+			<br />
+			<span class="p-2 mb-2 bg-primary bg-gradient rounded text-white shadow">Posted on: @question.CreationTime.ToString()</span>
+			<br />
+			<br />
+			<h5 class="h-5"> <a href="/user/Question/View/@question.Id" class="fw-bold text-blue">@question.Title </a> </h5>
+			<br />
+			<span> @Html.Raw(question.Description)</span>
+			<br />
+			<br />
+			<span>
+			@foreach(var tag in question.Tags)
+			{
+					<a href="/user/Tag/View/@tag.Id" class="p-2 mb-2 d-inline bg-secondary bg-gradient text-white rounded shadow"> @tag.Name</a>
+			}
+			</span>
+			<div class="text-end">
+				Posted By : <a href="/user/Profile/ViewProfile/@question.UserId" style="color:cornflowerblue">@question.UserName </a>
+			</div>
+		</div>
+	</div>
+	<br />
+}

@@ -1,0 +1,47 @@
+﻿@model EditProfileModel
+@{
+	ViewData["title"] = "Edit Profile";
+}
+<h3 class="h3"> Edit Profile </h3>
+<hr />
+@if (TempData["ErrorMessage"] is not null)
+{
+    <div class="p-1 mb-2 bg-danger bg-gradient shadow-md text-white rounded">@TempData["ErrorMessage"]</div>
+}
+<form class="form-horizontal" asp-area="user" asp-controller="Profile" asp-action="Edit" method="post">
+        <div class="text-danger" asp-validation-summary="All"></div>
+        <input asp-for="Id" type="hidden" />
+        <label asp-for="Name"></label>
+        <br />
+        <input asp-for="Name" value="@Model.Name" class="form-control" id="floatingInput" />
+        <br />
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <br />
+        <label asp-for="Designation"></label>
+        <br />
+        <input asp-for="Designation" value="@Model.Designation" class="form-control" id="floatingInput" />
+        <br />
+        <label asp-for="About"></label>
+        <br />
+        <input asp-for="About" value="@Model.About" class="form-control" id="floatingInput" />
+        <br />
+        <span asp-validation-for="About" class="text-danger"></span>
+        <br />
+        <label asp-for="PortfolioLink"></label>
+        <br />
+        <input asp-for="PortfolioLink" value="@Model.PortfolioLink" class="form-control" id="floatingInput" />
+        <br />
+        <label asp-for="Address"></label>
+        <br />
+        <input asp-for="Address" value="@Model.Address" class="form-control" id="floatingInput" />
+        <br />
+        <label asp-for="GithubLink"></label>
+        <br />
+        <input asp-for="GithubLink" value="@Model.GithubLink" class="form-control" id="floatingInput" />
+        <br />
+        <br />
+        <input type="submit" class="p-2 mb-2 btn btn-lg btn-info rounded shadow" id="floatingInput" value="Update" />
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

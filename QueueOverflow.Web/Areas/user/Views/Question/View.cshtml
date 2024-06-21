@@ -1,0 +1,174 @@
+﻿@model ViewSpecificQuestionModel
+@{
+	ViewData["title"] = "View Question";
+}
+<!-- Place the first <script> tag in your HTML's <head> -->
+<script src="https://cdn.tiny.cloud/1/1en51jkw8j1osd3n5gzwxjqrafsw9c6cng70ypdqadx01gs5/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Tiny MCE CDN For MD Editor -->
+<script>
+	tinymce.init({
+		selector: 'textarea',
+		plugins: ['table powerpaste',
+			'lists media',
+			'paste'],
+		toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+		tinycomments_mode: 'embedded',
+		tinycomments_author: 'Author name',
+		mergetags_list: [
+			{ value: 'First.Name', title: 'First Name' },
+			{ value: 'Email', title: 'Email' },
+		],
+		ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+	});
+</script>
+@if (TempData["SuccessMessage"] is not null)
+{
+	<div class="p-1 mb-2 bg-success bg-gradient shadow-md text-white rounded">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] is not null)
+{
+	<div class="p-1 mb-2 bg-danger bg-gradient shadow-md text-white rounded">@TempData["ErrorMessage"]</div>
+}
+<div class="card bg-light" id="question">
+	<div class="card-body">
+		<span class="p-2 mb-2 bg-info bg-gradient rounded text-white shadow">@Model.Question.Like Votes</span> |
+		<span class="p-2 mb-2 bg-danger bg-gradient rounded text-white shadow">@Model.Question.Dislike Down Votes</span>
+		<br />
+		<br />
+		<span class="p-2 mb-2 bg-primary bg-gradient rounded text-white shadow">Posted on: @Model.Question.CreationTime.ToString()</span>
+		<br />
+		<br />
+		<h4 class="card-title"> <a href="/user/Question/View/@Model.Question.Id" class="fw-bold text-blue">@Model.Question.Title </a> </h4>
+		<br />
+		<span> @Html.Raw(Model.Question.Description)</span>
+		<br />
+		<a href="/user/Question/Like/@Model.Question.Id">
+			<span class="material-icons" id="likeBtn">thumb_up</span> Like  
+		</a>
+		<a href="/user/Question/UnLike/@Model.Question.Id">
+			<span class="material-icons">thumb_down</span> UnLike
+		</a>
+		<br />
+		<br />
+		<span>
+			@if(Model.Question.Tags.Count>0)
+			{
+				foreach (var tag in Model.Question.Tags)
+				{
+					<a href="/user/Tag/View/@tag.Id" class="d-inline p-2 bg-secondary bg-gradient rounded text-white shadow"> @tag.Name</a>
+				}
+			}
+		</span>
+		<div class="text-end">
+			<img src="/user/ProfilePic/GetIamge/@Model.Question.UserId" style="height:50px;width:50px; border-radius:30px;" />
+			<a href="/user/Profile/ViewProfile/@Model.Question.UserId" style="color:cornflowerblue">@Model.Question.UserName </a>
+		</div>
+	</div>
+</div>
+	<br />
+	<br />
+	<br />
+	<h3>Comments</h3>
+	<hr />
+	<br />
+	@if(Model.Comments is not null && Model.Comments.Count>0)
+	{
+		<h3>@Model.Comments.Count Comments</h3>
+		foreach (var comment in Model.Comments)
+		{
+			<div class="card text-black shadow-md p-3 mb-5 rounded">
+				<div class="ms-3 mt-3">
+					<span>
+						<span class="material-icons">
+							schedule
+						</span>
+						answered on @comment.CreationTime.ToString()
+					</span>
+				</div>
+				<div class="ms-lg-5 mt-lg-2 justify-content-between">
+					<b>
+						@Html.Raw(comment.Text)
+					</b>
+				</div>
+				<div class="text-end">
+					<img src="/user/ProfilePic/GetIamge/@comment.UserId" style="height:50px;width:50px; border-radius:30px;" />
+					<a href="/user/Profile/ViewProfile/@comment.UserId" style="color:cornflowerblue">@comment.UserName </a>
+				</div>
+				<br />
+			</div>
+		}
+	}
+	<h4>Add Comment</h4>
+	<hr />
+	<form asp-area="user" asp-action="Create" asp-controller="Comment" method="post">
+		<input asp-for="UserId" type="hidden"/>
+		<input asp-for="UserName" type="hidden"/>
+		<input asp-for="ReturnURL" type="hidden"/>
+			
+		<input asp-for="CommentToPost.UserId" value="@Model.UserId" type="hidden"/>
+		<input asp-for="CommentToPost.UserName" value="@Model.UserName" type="hidden"/>
+		<input asp-for="CommentToPost.QuestionId" value="@Model.Question.Id" type="hidden" />
+		<textarea asp-for="CommentToPost.Text" placeholder="Leave a comment here" id="tiny">
+
+		</textarea>
+		<span asp-validation-for="CommentToPost.Text" class="text-danger"></span>
+		<br />
+		<br />
+		<input type="submit" class="btn btn-outline-primary rounded shadow" value="Post Your Comment"/>
+	</form>
+	<br />
+	<h3>Answers</h3>
+	<hr />
+	<br />
+	@if(Model.Replies is not null && Model.Replies.Count>0)
+	{
+		<h3>@Model.Replies.Count Answers</h3>
+		foreach (var reply in Model.Replies)
+		{
+			<div class="card text-black shadow-md p-3 mb-5 rounded">
+				<div class="ms-3 mt-3">
+					<span>
+						<span class="material-icons">
+							schedule
+						</span>
+						answered on @reply.CreationTime.ToString()
+					</span>
+				</div>
+				<div class="ms-lg-5 mt-lg-2 justify-content-between card-title">
+					@Html.Raw(reply.Text) 
+				</div>
+				<div class="text-end">
+					<img src="/user/ProfilePic/GetIamge/@reply.UserId" style="height:50px;width:50px; border-radius:30px;" />
+				<a href="/user/Profile/ViewProfile/@reply.UserId" style="color:cornflowerblue">@reply.UserName </a>
+				</div>
+				<br />
+			</div>
+		}
+	}
+	<br />
+	<br />
+	<br />
+	<h6 class="display-6">Your Answer</h6>
+	<hr />
+		
+	<h4>Add Reply</h4>
+	<hr />
+	<form asp-area="user" asp-action="Create" asp-controller="Reply" method="post">
+		<input asp-for="UserId" type="hidden"/>
+		<input asp-for="UserName" type="hidden"/>
+		<input asp-for="ReturnURL" type="hidden"/>
+		<input asp-for="ReplyToPost.UserId" value="@Model.UserId" type="hidden"/>
+		<input asp-for="ReplyToPost.UserName" value="@Model.UserName" type="hidden"/>
+		<input asp-for="ReplyToPost.QuestionId" value="@Model.Question.Id" type="hidden" />
+		<div class="form-floating">
+			<textarea asp-for="ReplyToPost.Text" placeholder="Leave a comment here" >
+
+			</textarea>
+		</div>
+		<span asp-validation-for="ReplyToPost.Text" class="text-danger"></span>
+		<br />
+		<br />
+		<input type="submit" class="btn btn-outline-primary rounded shadow" value="Post Your Answer" />
+	</form>
+<partial name="_ValidationScriptsPartial" />
