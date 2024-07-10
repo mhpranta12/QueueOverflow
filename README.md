@@ -1,5 +1,21 @@
 # QueueOverflow
 This is almost a clone of <b>Stack Overflow</b>
+<h1>Features </h1>
+<ul type="circle">
+  <li>Users can register and login. Email verification has been added.</li>
+  <li>Like in stack overflow, when a user gains a certain level, then they can post questions and reply to questions.</li>
+  <li>Users can post questions.</li>
+  <li>Users can reply to a question.</li>
+  <li>Users can comment on questions.</li>
+  <li>Users can upvote/downvote questions.</li>
+  <li>Users can use markdown editors to post code in questions and replies.</li>
+  <li>Users can upload profile picture.</li>
+  <li>There are tags in question through which users can view questions.</li>
+  <li>There is a point/badge system for rewarding members.</li>
+  <li>Users can view their own questions.</li>
+  <li>Users can view and edit their profile information.</li>
+  <li>Users can search questions</li>
+</ul>
 <h1>Screen Shots of the UI</h1>
 <img src="/UI/1.png">
 <img src="/UI/2.png">
